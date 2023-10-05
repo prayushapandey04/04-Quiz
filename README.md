@@ -1,10 +1,10 @@
 # 04-Quiz
 
-This is a coding quiz which tests the user content over simple HTML, CSS, and JavaScript.
+This is a coding quiz which tests the user content over JavaScript.
 
 ## Description
 
-This is a 5 question coding quiz website which will test your knowledge on JavaScript. This assignment was given to me blank and I created all the necessary files for the quiz. By creating the HTML and CSS, I have styled the website and added the content to the page. By using JavaScript, I have been able to add functionality to the page. The quiz is a timed quiz and it has a timer which counts down from 300 seconds (5 minutes) to 0. The user is asked 5 questions and at the end they get a score.
+This is a 5 question coding quiz website which will test user's knowledge on JavaScript. This assignment was given to me blank and I created all the necessary files for the quiz. By creating the HTML and CSS, I have styled the website and added the content to the page. By using JavaScript, I have been able to add functionality to the page. The quiz is a timed quiz and it has a timer which counts down from 300 seconds (5 minutes) to 0. The user is asked 5 questions and at the end they get a score.
 
 ## Usage 
 
