@@ -2,7 +2,7 @@
 
 var timerEl = document.getElementById("#timer");
 var beginQuiz = document.getElementById('#otherbutton');
-var theQuestions = document.getElementbyId('#questions');
+var questionAsked = document.getElementbyId('#questions');
 var theOptions = document.getElementbyId('#options');
 var theAnswer = document.getElementbyId('#answers');
 
@@ -40,8 +40,15 @@ var questions = [
 
 var timeLeft = 300;
 var timerInterval;
-var theQuestion = 0;
+var currentQuestion = 0;
 
+// Function to automatically load the next question after previous question is answered
+
+function loadQuestion() {
+    var theQuestion = questions[currentQuestion];
+    questionAsked.textContent = currentQuestion.question;
+    theOptions.textContent = currentQuestion.theOptions
+}
 
 beginQuiz.addEventListener('click', function() {
     beginQuiz.style.display = "none";

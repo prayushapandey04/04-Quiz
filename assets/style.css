@@ -28,8 +28,12 @@
     margin-left: 10px;
 }
 
-#otherbutton{
+#otherbutton {
     background-color: whitesmoke;
     font-weight: bolder;
     margin-top: 10px;
+}
+
+#time {
+    margin-top: 100px;
 }
