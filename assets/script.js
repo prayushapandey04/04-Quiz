@@ -6,7 +6,7 @@ var questionAsked = document.getElementById("questions");
 var choiceA = document.getElementById("choiceA");
 var choiceB = document.getElementById("choiceB");
 var choiceC = document.getElementById("choiceC");
-var theAnswer = document.getElementById("answers");
+var feedback = document.getElementById("answers");
 
 // Questions, Choices, and Answers Array
 
@@ -45,15 +45,19 @@ var timerInterval;
 var currentQuestion = 0;
 var userScore = 0;
 
-// Function to automatically load the next question after previous question is answered
-
+// Function to automatically load the next question after the previous one is answered
 function loadQuestion() {
     var theQuestion = questions[currentQuestion];
     questionAsked.textContent = theQuestion.question;
-    choiceA.textContent = theQuestion.options[0];
-    choiceB.textContent = theQuestion.options[1];
-    choiceC.textContent = theQuestion.options[2];
-    theAnswer.textContent = "";
+    choiceA.textContent = theQuestion.choices[0];
+    choiceB.textContent = theQuestion.choices[1];
+    choiceC.textContent = theQuestion.choices[2];
+    feedback.textContent = "";
+
+    var answerInputs = document.querySelectorAll('input[name="theanswer"]');
+    answerInputs.forEach(function(input) {
+        input.checked = false;
+    })
 }
 
 // Event listener added to click the Begin Quiz button
@@ -82,55 +86,45 @@ function submitQuiz() {
     alert("Quiz is submitted! Your score is " + userScore);
    
 }
-   
 
-// Function to load the next question automatically
 
+// Event listeners for radio button clicks
+
+var answerInputs = document.querySelectorAll('input[name="theanswer"]');
+answerInputs.forEach(function(input) {
+    input.addEventListener("click", calculateScore);
+});
+
+// Function to calculate user's score
+
+function calculateScore() {
+    var userAnswer = document.querySelector('input[name="theanswer"]:checked');
+    
+    if (userAnswer && userAnswer.value === questions[currentQuestion].answer) {
+        userScore ++;
+        feedback.textContent = "Correct!";
+    } else {
+        feedback.textContent = "Wrong!";
+    }
+
+    setTimeout(function() {
+        feedback.textContent = "";
+        nextQuestion();
+    }, 1000);
+}
+
+
+//Function to load the next question automatically
 
 function nextQuestion() {
     currentQuestion++;
 
     if (currentQuestion < questions.length) {
         loadQuestion();
-    
+
     } else {
-    clearInterval(timerInterval);
-    alert("Quiz is over!");
-    submitQuiz();
+        clearInterval(timerInterval);
+        alert("Quiz is over!");
+        submitQuiz();
     }
 }
-
-
-// Function to calculate user's score
-
-function calculateScore() {
-    userScore = 0
-    for (var i = 0; i < questions.length; i++) {
-        if (
-            (questions[i].answer === "a" && document.getElementById("choiceA").checked) ||
-            (questions[i].answer === "b" && document.getElementById("choiceB").checked) ||
-            (questions[i].answer === "c" && document.getElementbyId("choiceC").checked) 
-        ) {
-            userScore++;
-        }
-    }
-    return userScore;
-}
-
-document.querySelector('input[name="theanswer"]').addEventListener("click", function() {
-    var userAnswer = document.querySelector('input[name="theanswer"]:checked');
-    if (!userAnswer) {
-        return;
-    }
-
-    if (userAnswer.value === questions[currentQuestion].answer) {
-        theAnswer.textContent = "Correct!";
-    } else {
-        theAnswer.textContent = "Wrong!";
-    }
-
-    setTimeout(function() {
-        nextQuestion();
-        theAnswer.textContent = "";
-    }, 1000);
-});
