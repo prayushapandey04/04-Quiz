@@ -1,12 +1,12 @@
 // Different variables
 
-var timerEl = document.getElementById("#timer");
-var beginQuiz = document.getElementById('#otherbutton');
-var questionAsked = document.getElementbyId('#questions');
-var choiceA = document.getElementbyId('#choiceA');
-var choiceB = document.getElementbyId('#choiceB');
-var choiceC = document.getElementbyId('#choiceC');
-var theAnswer = document.getElementbyId('#answers');
+var timerEl = document.getElementById("timer");
+var beginQuiz = document.getElementById("otherbutton");
+var questionAsked = document.getElementById("questions");
+var choiceA = document.getElementById("choiceA");
+var choiceB = document.getElementById("choiceB");
+var choiceC = document.getElementById("choiceC");
+var theAnswer = document.getElementById("answers");
 
 // Questions, Choices, and Answers Array
 
@@ -53,7 +53,7 @@ function loadQuestion() {
     choiceA.textContent = theQuestion.options[0];
     choiceB.textContent = theQuestion.options[1];
     choiceC.textContent = theQuestion.options[2];
-    theAnswer.textContet = "";
+    theAnswer.textContent = "";
 }
 
 // Event listener added to click the Begin Quiz button
@@ -73,15 +73,16 @@ function setTimer() {
                 submitQuiz();
             } else {
                 timeLeft--;
-                timerEl.textContext = secondsLeft + "seconds until quiz time runs out";
+                timerEl.textContent = timeLeft + "seconds until quiz time runs out";
         }
     }, 1000);
+}
 
 function submitQuiz() {
-    alert("Quiz is submitted!");
-    return userScore;
+    alert("Quiz is submitted! Your score is " + userScore);
+   
 }
-}   
+   
 
 // Function to load the next question automatically
 
@@ -91,13 +92,14 @@ function nextQuestion() {
 
     if (currentQuestion < questions.length) {
         loadQuestion();
+    
+    } else {
+    clearInterval(timerInterval);
+    alert("Quiz is over!");
+    submitQuiz();
     }
 }
 
-function submitQuiz() {
-    userScore = calculateScore();
-    userScore.textContent = "Your score is" + userScore;
-}
 
 // Function to calculate user's score
 
@@ -109,9 +111,26 @@ function calculateScore() {
             (questions[i].answer === "b" && document.getElementById("choiceB").checked) ||
             (questions[i].answer === "c" && document.getElementbyId("choiceC").checked) 
         ) {
-            score++;
+            userScore++;
         }
     }
     return userScore;
 }
 
+document.querySelector('input[name="theanswer"]').addEventListener("click", function() {
+    var userAnswer = document.querySelector('input[name="theanswer"]:checked');
+    if (!userAnswer) {
+        return;
+    }
+
+    if (userAnswer.value === questions[currentQuestion].answer) {
+        theAnswer.textContent = "Correct!";
+    } else {
+        theAnswer.textContent = "Wrong!";
+    }
+
+    setTimeout(function() {
+        nextQuestion();
+        theAnswer.textContent = "";
+    }, 1000);
+});
